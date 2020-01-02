@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TaskManagerMVC.Models.TaskModel>
+
+@{
+    ViewBag.Title = "ViewTasks";
+}
+
+<h2>ViewTasks</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Tasks")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskDeadline)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskDetails)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.TaskName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TaskPriority)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TaskStatus)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TaskDeadline)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TaskDetails)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td>
+</tr>
+}
+
+</table>
