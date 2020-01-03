@@ -9,6 +9,7 @@ namespace TaskManagerMVC.Models
 {
     public class TaskModel
     {
+        public int Id { get; set; }
         [Display(Name = "Task Name")]
         [Required(ErrorMessage = "You must specify task name")]
         public string TaskName { get; set; }

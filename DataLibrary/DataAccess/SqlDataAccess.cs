@@ -30,5 +30,19 @@ namespace DataLibrary.Logic
                 return cnn.Execute(sql, data);
             }
         }
+        public static int DeleteData<T>(string sql, T data)
+        {
+            using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
+            {
+                return cnn.Execute(sql, data);
+            }
+        }
+        public static int EditData<T>(string sql, T data)
+        {
+            using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
+            {
+                return cnn.Execute(sql, data);
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace DataLibrary.Models
     }
     public class TaskModel
     {
+        public int Id { get; set; }
         public string TaskName { get; set; }
         public Priority TaskPriority { get; set; }
         public Status TaskStatus { get; set; }

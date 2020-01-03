@@ -39,6 +39,7 @@ namespace TaskMenager.Controllers
             {
                 tasks.Add(new TaskModel
                 {
+                    Id = row.Id,
                     TaskName = row.TaskName,
                     TaskPriority = row.TaskPriority,
                     TaskStatus = row.TaskStatus,
@@ -62,6 +63,37 @@ namespace TaskMenager.Controllers
             if (ModelState.IsValid)
             {
                 int recordsCreated = CreateTask(task.TaskName,
+                    task.TaskPriority,
+                    task.TaskStatus,
+                    task.TaskDeadline,
+                    task.TaskDetails);
+                return RedirectToAction("ViewTasks");
+            }
+
+            return View();
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            int recordsAffected = DeleteTask(id);
+            return RedirectToAction("ViewTasks");
+        }
+        public ActionResult Edit(int id, string TaskName, DataLibrary.Models.Priority TaskPriority, DataLibrary.Models.Status TaskStatus, DateTime TaskDeadline, string TaskDetails)
+        {
+            ViewBag.Message = "Edit your task";
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(TaskModel task)
+        {
+            if (ModelState.IsValid)
+            {
+                int recordsAffected = EditTask(
+                    task.Id,
+                    task.TaskName,
                     task.TaskPriority,
                     task.TaskStatus,
                     task.TaskDeadline,

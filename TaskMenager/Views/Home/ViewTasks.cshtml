@@ -15,6 +15,12 @@
             @Html.DisplayNameFor(model => model.TaskName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.TaskPriority)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskStatus)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.TaskDeadline)
         </th>
         <th>
@@ -41,9 +47,9 @@
         @Html.DisplayFor(modelItem => item.TaskDetails)
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Edit", "Edit", new {  id=item.Id, TaskName=item.TaskName, TaskPriority=item.TaskPriority, TaskStatus=item.TaskStatus, TaskDeadline=item.TaskDeadline.ToString("yyyy-MM-dd"), TaskDetails=item.TaskDetails }, null) |
         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        @Html.ActionLink("Delete", "Delete", new {  id=item.Id }, null)
     </td>
 </tr>
 }
