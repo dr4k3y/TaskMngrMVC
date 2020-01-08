@@ -2,13 +2,41 @@
 
 @{
     ViewBag.Title = "ViewTasks";
+    foreach (var item in Model)
+    {
+        <div class="modal fade" id="@item.Id">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                        <h3 class="modal-title">@item.TaskName details:</h3>
+
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            @Html.DisplayFor(modelItem => item.TaskDetails)
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Ok</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
 }
 
-<h2>ViewTasks</h2>
+<h2>Your Tasks:</h2>
 
 <p>
     @Html.ActionLink("Create New", "Tasks")
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -23,35 +51,30 @@
         <th>
             @Html.DisplayNameFor(model => model.TaskDeadline)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TaskDetails)
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.TaskName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TaskPriority)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TaskStatus)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TaskDeadline)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TaskDetails)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new {  id=item.Id, TaskName=item.TaskName, TaskPriority=item.TaskPriority, TaskStatus=item.TaskStatus, TaskDeadline=item.TaskDeadline.ToString("yyyy-MM-dd"), TaskDetails=item.TaskDetails }, null) |
-        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Delete", "Delete", new {  id=item.Id }, null)
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskPriority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskDeadline)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id, TaskName = item.TaskName, TaskPriority = item.TaskPriority, TaskStatus = item.TaskStatus, TaskDeadline = item.TaskDeadline.ToString("yyyy-MM-dd"), TaskDetails = item.TaskDetails }, null) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, null) |
+                <a href="#" data-toggle="modal" data-target="#@item.Id">Details</a>
+            </td>
+        </tr>
+    }
 
 </table>

@@ -23,6 +23,13 @@ namespace DataLibrary.Logic
                 return cnn.Query<T>(sql).ToList();
             }
         }
+        public static List<T> LoadData<T>(string sql, int id)
+        {
+            using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
+            {
+                return cnn.Query<T>(sql, id).ToList();
+            }
+        }
         public static int SaveData<T>(string sql, T data)
         {
             using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
