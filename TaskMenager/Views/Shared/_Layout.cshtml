@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
@@ -9,6 +10,27 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <div class="modal fade" id="Login">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h3 class="modal-title">Login</h3>
+
+                </div>
+                <div class="modal-body">
+                    @{Html.RenderAction("LogIn");}
+                </div>
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -23,6 +45,14 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Add Task", "Tasks", "Home")</li>
                     <li>@Html.ActionLink("Sign Up", "Register", "Home")</li>
+                    @if (Session["UserID"] == null)
+                    {
+                        <li><a href="#" data-toggle="modal" data-target="#Login">Login</a></li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Logout", "LogOut", "Home")</li>
+                    }
                 </ul>
             </div>
         </div>
@@ -32,6 +62,10 @@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - TaskMngr</p>
+            @if (Session["UserID"] != null)
+            {
+                <p>Welcome @Session["UserName"].ToString()</p>
+            }
         </footer>
     </div>
 

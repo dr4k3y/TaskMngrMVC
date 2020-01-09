@@ -127,5 +127,24 @@ namespace TaskManagerMVC.Controllers
             CreateUser("adam", "adsfsdafsdaf");
             return RedirectToAction("ViewTasks");
         }
+        public ActionResult LogIn()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogIn(UserModel user)
+        {
+            int userID=AuthenticateUser(user.Username, user.Password);
+            Session["UserID"]=userID.ToString();
+            Session["UserName"] = user.Username.ToString();
+            return PartialView();
+        }
+        public ActionResult LogOut()
+        {
+            Session["UserID"] = null;
+            Session["UserName"] = null;
+            return RedirectToAction("ViewTasks");
+        }
     }
 }
