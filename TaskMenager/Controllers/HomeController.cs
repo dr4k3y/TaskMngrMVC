@@ -34,7 +34,16 @@ namespace TaskManagerMVC.Controllers
         public ActionResult ViewTasks()
         {
             ViewBag.Massage = "Tasks list";
-            var data = LoadTasks();
+            int id;
+            if (Session["UserID"]==null)
+            {
+                id = 0;
+            }
+            else
+            {
+                id = Convert.ToInt32(Session["UserID"]);
+            }
+            var data = LoadTasks(id);
             List<TaskModel> tasks = new List<TaskModel>();
             foreach (var row in data)
             {
@@ -67,7 +76,8 @@ namespace TaskManagerMVC.Controllers
                     task.TaskPriority,
                     task.TaskStatus,
                     task.TaskDeadline,
-                    task.TaskDetails);
+                    task.TaskDetails,
+                    Convert.ToInt32(Session["UserID"]));
                 return RedirectToAction("ViewTasks");
             }
 
@@ -144,7 +154,7 @@ namespace TaskManagerMVC.Controllers
         {
             Session["UserID"] = null;
             Session["UserName"] = null;
-            return RedirectToAction("ViewTasks");
+            return RedirectToAction("Index");
         }
     }
 }

@@ -26,5 +26,6 @@ namespace DataLibrary.Models
         public Status TaskStatus { get; set; }
         public DateTime TaskDeadline { get; set; }
         public string TaskDetails { get; set; }
+        public int UserId { get; set; }
     }
 }
