@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +169,7 @@
     <Content Include="Views\Home\ViewTasks.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

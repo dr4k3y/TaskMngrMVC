@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="DataAccess\SqlDataAccess.cs" />
     <Compile Include="Logic\TaskProcessor.cs" />
+    <Compile Include="Logic\UserProcessor.cs" />
     <Compile Include="Models\TaskModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

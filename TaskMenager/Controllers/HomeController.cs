@@ -6,8 +6,9 @@ using System.Web.Mvc;
 using TaskManagerMVC.Models;
 using DataLibrary;
 using static DataLibrary.Logic.TaskProcessor;
+using static DataLibrary.Logic.UserProcessor;
 
-namespace TaskMenager.Controllers
+namespace TaskManagerMVC.Controllers
 {
     public class HomeController : Controller
     {
@@ -102,6 +103,29 @@ namespace TaskMenager.Controllers
             }
 
             return View();
+        }
+        public ActionResult Register()
+        {
+                return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(UserModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                int recordsAffected = CreateUser(
+                    user.Username,
+                    user.Password
+                    );
+                return RedirectToAction("ViewTasks");
+            }
+            return View();
+        }
+        public ActionResult Test()
+        {
+            CreateUser("adam", "adsfsdafsdaf");
+            return RedirectToAction("ViewTasks");
         }
     }
 }
