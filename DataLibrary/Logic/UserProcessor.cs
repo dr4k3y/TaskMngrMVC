@@ -55,21 +55,28 @@ namespace DataLibrary.Logic
                 Username=userName,
             };
             user = SqlDataAccess.LoadData(find, data);
-            salt = user[0].Salt;
-            using (var sha = new SHA512CryptoServiceProvider())
+            if (user.Count() != 0)
             {
-                var hashdata = Encoding.ASCII.GetBytes(userPassword).Concat(salt).ToArray<byte>();
+                salt = user[0].Salt;
+                using (var sha = new SHA512CryptoServiceProvider())
+                {
+                    var hashdata = Encoding.ASCII.GetBytes(userPassword).Concat(salt).ToArray<byte>();
 
-                var shadata = sha.ComputeHash(hashdata);
-                passwordHash = shadata;
+                    var shadata = sha.ComputeHash(hashdata);
+                    passwordHash = shadata;
+                }
+                if (passwordHash.SequenceEqual(user[0].Password))
+                {
+                    return user[0].Id;
+                }
+                else
+                {
+                    return 0;
+                }
             }
-            if (passwordHash.SequenceEqual(user[0].Password))
+            else
             {
-                return user[0].Id;
-            }
-            else 
-            {
-                return 0; 
+                return 0;
             }
         }
     }

@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<TaskManagerMVC.Models.TaskModel>
+@using TaskManagerMVC.Models
+@{
+    SortingPagingInfoModel info = ViewBag.SortingPagingInfo;
+}
+
 
 @{
     ViewBag.Title = "ViewTasks";
@@ -32,49 +37,112 @@
 }
 
 <h2>Your Tasks:</h2>
+<script src="~/Scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 <p>
     @Html.ActionLink("Create New", "Tasks")
 </p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TaskName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TaskPriority)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TaskStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TaskDeadline)
-        </th>
-        <th></th>
-    </tr>
+@using (Html.BeginForm("ViewTasks", "Home", FormMethod.Post, new { id = "viewform" }))
+{
 
-    @foreach (var item in Model)
-    {
+    @Html.AntiForgeryToken()
+    @Html.Hidden("SortField", info.SortField)
+    @Html.Hidden("SortDirection", info.SortDirection)
+    @Html.Hidden("PageCount", info.PageCount)
+    @Html.Hidden("PageSize", info.PageSize)
+    @Html.Hidden("CurrentPageIndex", info.CurrentPageIndex)
+
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskPriority)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskDeadline)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id, TaskName = item.TaskName, TaskPriority = item.TaskPriority, TaskStatus = item.TaskStatus, TaskDeadline = item.TaskDeadline.ToString("yyyy-MM-dd"), TaskDetails = item.TaskDetails }, null) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, null) |
-                <a href="#" data-toggle="modal" data-target="#@item.Id">Details</a>
-            </td>
+            <th>
+                <a href="#" data-sortfield="TaskName" class="header">@Html.DisplayNameFor(model => model.TaskName)</a>
+            </th>
+            <th>
+                <a href="#" data-sortfield="TaskPriority" class="header">@Html.DisplayNameFor(model => model.TaskPriority)</a>
+            </th>
+            <th>
+                <a href="#" data-sortfield="TaskStatus" class="header">@Html.DisplayNameFor(model => model.TaskStatus)</a>
+            </th>
+            <th>
+                <a href="#" data-sortfield="TaskDeadline" class="header">@Html.DisplayNameFor(model => model.TaskDeadline)</a>
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskPriority)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskDeadline)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, TaskName = item.TaskName, TaskPriority = item.TaskPriority, TaskStatus = item.TaskStatus, TaskDeadline = item.TaskDeadline.ToString("yyyy-MM-dd"), TaskDetails = item.TaskDetails }, null) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, null) |
+                    <a href="#" data-toggle="modal" data-target="#@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    <table>
+        <tr>
+            <td>Page: </td>
+            @for (var i = 0; i < info.PageCount; i++)
+            {
+                <td>
+                    @if (i == info.CurrentPageIndex)
+                    {
+                        @(i + 1)
+                    }
+                    else
+                    {
+                        <a href="#" data-pageindex="@i" class="pager">@(i + 1)</a>
+                    }
+
+                </td>
+            }
+
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".header").click(function (evt) {
+                var sortfield = $(evt.target).data("sortfield");
+                if ($("#SortField").val() == sortfield) {
+                    if ($("#SortDirection").val() == "ascending") {
+                        $("#SortDirection").val("descending");
+                    }
+                    else {
+                        $("#SortDirection").val("ascending");
+                    }
+                }
+                else {
+                    $("#SortField").val(sortfield);
+                    $("#SortDirection").val("ascending");
+                }
+                evt.preventDefault();
+                $("#viewform").submit();
+            });
+
+            $(".pager").click(function (evt) {
+                var pageindex = $(evt.target).data("pageindex");
+                $("#CurrentPageIndex").val(pageindex);
+                evt.preventDefault();
+                $("#viewform").submit();
+            });
+        });
+    </script>
+}
+
+
+

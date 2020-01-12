@@ -20,7 +20,7 @@
 
                 </div>
                 <div class="modal-body">
-                    @{Html.RenderAction("LogIn");}
+                    @{if (Session["UserID"] == null) { Html.RenderAction("LogIn"); } }
                 </div>
                 <div class="modal-footer">
 
