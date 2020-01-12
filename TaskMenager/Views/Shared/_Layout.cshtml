@@ -41,7 +41,11 @@
                 </button>
                 @if (Session["UserID"] != null)
                 {
-                    @Html.ActionLink("Task Menager", "ViewTasks", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                    string title = Session["UserName"].ToString();
+                    title = title + "'s Tasks";
+
+                    @Html.ActionLink(title, "ViewTasks", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 }
 
             </div>

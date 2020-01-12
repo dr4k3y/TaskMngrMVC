@@ -55,7 +55,7 @@ namespace DataLibrary.Logic
                 Username=userName,
             };
             user = SqlDataAccess.LoadData(find, data);
-            if (user.Count() != 0)
+            if (user.Count() != 0 & userPassword!=null)
             {
                 salt = user[0].Salt;
                 using (var sha = new SHA512CryptoServiceProvider())
