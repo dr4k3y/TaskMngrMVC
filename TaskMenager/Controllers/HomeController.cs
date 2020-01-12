@@ -195,13 +195,20 @@ namespace TaskManagerMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                int recordsAffected = CreateUser(
+                int recordsCreated = CreateUser(
                     user.Username,
                     user.Password
                     );
-                return RedirectToAction("Index");
+                if (recordsCreated == 1)
+                {
+                    LogIn(user);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            return View();
+            return RedirectToAction("ViewTasks");
         }
         public ActionResult Test()
         {
