@@ -98,6 +98,11 @@ namespace TaskManagerMVC.Controllers
                     TaskDetails = row.TaskDetails
                 });
             }
+            info.PageCount = Convert.ToInt32(Math.Ceiling(((double)(tasks.Count() / (double)info.PageSize))));
+            if (info.PageCount==1)
+            {
+                info.CurrentPageIndex = 0;
+            }
             switch (info.SortField)
             {
                 case "Id":

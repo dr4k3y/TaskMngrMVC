@@ -102,16 +102,37 @@
                 <td>
                     @if (i == info.CurrentPageIndex)
                     {
-                        @(i + 1)
+                        <button type="button" class="btn btn-block" disabled>@(i + 1)</button>
                     }
                     else
                     {
-                        <a href="#" data-pageindex="@i" class="pager">@(i + 1)</a>
+                        <button type="button" href="#" data-pageindex="@i" class="btn btn-default">
+                            @(i + 1)
+                        </button>
                     }
 
                 </td>
             }
 
+        </tr>
+        <tr>
+            <td>Items per page: </td>
+            @for (var i = 10; i <= 100; i = i + 10)
+            {
+                <td>
+                    @if (i == info.PageSize)
+                    {
+                        <button type="button" class="btn btn-block">@i</button>
+
+
+                    }
+                    else
+                    {
+                        <button type="button" href="#" data-pagesize="@i" class="btn btn-primary">@i</button>
+                    }
+                </td>
+
+            }
         </tr>
     </table>
     <script type="text/javascript">
@@ -134,9 +155,15 @@
                 $("#viewform").submit();
             });
 
-            $(".pager").click(function (evt) {
+            $(".btn.btn-default").click(function (evt) {
                 var pageindex = $(evt.target).data("pageindex");
                 $("#CurrentPageIndex").val(pageindex);
+                evt.preventDefault();
+                $("#viewform").submit();
+            });
+            $(".btn.btn-primary").click(function (evt) {
+                var pagesize = $(evt.target).data("pagesize");
+                $("#PageSize").val(pagesize);
                 evt.preventDefault();
                 $("#viewform").submit();
             });
